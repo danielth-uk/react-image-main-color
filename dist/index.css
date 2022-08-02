@@ -1,0 +1,16 @@
+/* add css module styles here (optional) */
+
+._styles-module__test__3ybTi {
+  margin: 2em;
+  padding: 0.5em;
+  border: 2px solid #000;
+  font-size: 2em;
+  text-align: center;
+}
+
+._styles-module__invisibleButton__1NA2P{
+  border: none;
+  background-color: rgba(0,0,0,0);
+  padding: 0;
+  border: 0;
+}
