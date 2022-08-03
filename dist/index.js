@@ -65,7 +65,8 @@ var getAverageRGB = function getAverageRGB(imgBase) {
 var FileAreaInput = function FileAreaInput(_ref) {
   var container = _ref.container,
       setColorData = _ref.setColorData,
-      dropActiveClass = _ref.dropActiveClass;
+      dropActiveClass = _ref.dropActiveClass,
+      imageBaseData = _ref.imageBaseData;
 
   var _React$useState = React.useState(),
       hexValue = _React$useState[0],
@@ -81,6 +82,15 @@ var FileAreaInput = function FileAreaInput(_ref) {
 
   var handleFile = function handleFile(event) {
     event.preventDefault();
+
+    if (imageBaseData !== undefined) {
+      var base64 = getBase64(event.dataTransfer.files[0]);
+
+      base64.onload = function () {
+        imageBaseData(base64.result);
+      };
+    }
+
     getMainColor(event.dataTransfer.files[0], setHexValue);
   };
 
@@ -105,7 +115,8 @@ var FileAreaInput = function FileAreaInput(_ref) {
 };
 var FileButtonInput = function FileButtonInput(_ref2) {
   var button = _ref2.button,
-      setColorData = _ref2.setColorData;
+      setColorData = _ref2.setColorData,
+      imageBaseData = _ref2.imageBaseData;
 
   var _React$useState3 = React.useState(),
       hexValue = _React$useState3[0],
@@ -123,6 +134,14 @@ var FileButtonInput = function FileButtonInput(_ref2) {
   };
 
   var handleFile = function handleFile(event) {
+    if (imageBaseData !== undefined) {
+      var base64 = getBase64(event.target.files[0]);
+
+      base64.onload = function () {
+        imageBaseData(base64.result);
+      };
+    }
+
     getMainColor(event.target.files[0], setHexValue);
   };
 

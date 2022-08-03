@@ -4,12 +4,21 @@ interface FileAreaInputProps {
   container: React.ReactElement
   setColorData: React.Dispatch<React.SetStateAction<any>>
   dropActiveClass? : string
+  imageBaseData?: React.Dispatch<React.SetStateAction<any>>
 }
+
+interface FileButtonInputProps {
+  button: React.ReactElement
+  setColorData: React.Dispatch<React.SetStateAction<any>>
+  imageBaseData?: React.Dispatch<React.SetStateAction<any>>
+}
+
 
 export const FileAreaInput = ({
   container,
   setColorData,
-  dropActiveClass
+  dropActiveClass,
+  imageBaseData
 }: FileAreaInputProps) => {
   const [hexValue, setHexValue] = React.useState<string>()
   const [activeDrop, setActiveDrop] = React.useState<boolean>(false)
@@ -20,6 +29,12 @@ export const FileAreaInput = ({
 
   const handleFile = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
+    if(imageBaseData !== undefined){
+      var base64 = getBase64(event.dataTransfer.files[0])
+      base64.onload = function () {
+        imageBaseData(base64.result)
+      }
+    }
     getMainColor(event.dataTransfer.files[0], setHexValue)
   }
 
@@ -42,14 +57,11 @@ export const FileAreaInput = ({
   )
 }
 
-interface FileButtonInputProps {
-  button: React.ReactElement
-  setColorData: React.Dispatch<React.SetStateAction<any>>
-}
 
 export const FileButtonInput = ({
   button,
-  setColorData
+  setColorData,
+  imageBaseData
 }: FileButtonInputProps) => {
   const [hexValue, setHexValue] = React.useState<string>()
   const buttonRef = React.useRef<any>()
@@ -65,6 +77,12 @@ export const FileButtonInput = ({
   }
 
   const handleFile = (event: any) => {
+    if(imageBaseData !== undefined){
+      var base64 = getBase64(event.target.files[0])
+      base64.onload = function () {
+        imageBaseData(base64.result)
+      }
+    }
     getMainColor(event.target.files[0], setHexValue)
   }
 
